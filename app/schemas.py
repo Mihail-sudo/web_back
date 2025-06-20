@@ -20,6 +20,11 @@ class User(UserBase):
         from_attributes = True
 
 
+class UserLogin(BaseModel):
+    email: str
+    password: str
+
+
 class ChatBase(BaseModel):
     name: Optional[str] = None
     is_ai_chat: bool = False

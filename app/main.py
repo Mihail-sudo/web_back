@@ -15,5 +15,3 @@ def startup():
 @app.get("/")
 def read_root():
     return {"message": "Messenger API is running"}
-
-
