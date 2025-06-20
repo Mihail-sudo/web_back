@@ -3,6 +3,9 @@ from app.models import User, Chat
 from app.schemas import UserCreate, ChatCreate
 from datetime import datetime
 
+def get_user_by_id(db: Session, id: int):
+    return db.query(User).get(id)
+
 def get_user_by_username(db: Session, username: str):
     return db.query(User).filter(User.username == username).first()
 

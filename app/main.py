@@ -4,7 +4,6 @@ from app.database import engine, Base
 from app.routers import users, chats
 from .models import *
 from .utils.access_token import get_current_user
-from typing import Annotated
 
 app = FastAPI()
 
@@ -29,6 +28,7 @@ def startup():
 def main_page(user: dict = Depends(get_current_user)):
     if user is None:
         raise HTTPException(status_code=401, detail="Authorizing failed")
+    print(user)
     return {"User": user}
 
 
