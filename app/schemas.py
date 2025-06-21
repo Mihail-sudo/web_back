@@ -25,14 +25,13 @@ class UserLogin(BaseModel):
     password: str
 
 
+class ChatCreate(BaseModel):
+    name: str
+
+
 class ChatBase(BaseModel):
-    name: Optional[str] = None
-    is_ai_chat: bool = False
-
-
-class ChatCreate(ChatBase):
-    created_at: datetime
-    participants: List[User] = []
+    name: str = None
+    owner_id: int
 
 
 class Chat(ChatBase):

@@ -21,8 +21,9 @@ class Chat(Base):
     __tablename__ = "chats"
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=True)
-    is_ai_chat = Column(Boolean, default=False)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+    owner_id = Column(Integer, ForeignKey("users.id"), nullable=False)
 
     participants = relationship("User", secondary="chat_participants", back_populates="chats")
     messages = relationship("Message", back_populates="chat")

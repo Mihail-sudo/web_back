@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from app.models import User, Chat
-from app.schemas import UserCreate, ChatCreate
+from app.schemas import UserCreate
 from datetime import datetime
 
 def get_user_by_id(db: Session, id: int):
@@ -19,8 +19,11 @@ def create_user(db: Session, user: UserCreate):
     db.refresh(db_user)
     return db_user
 
-def create_chat(db: Session, chat: ChatCreate):
-    db_chat = Chat(name=chat.name, is_ai_chat=chat.is_ai_chat, created_at=datetime.now(), participants=chat.participants)
+def create_chat(db: Session, chat: Chat, id):
+    user = get_user_by_id(db, id)
+    db_chat = Chat(name=chat.name, created_at=datetime.now(), participants=[], owner_id=id)
+    db_chat.participants.append(user)
+    
     db.add(db_chat)
     db.commit()
     db.refresh(db_chat)
