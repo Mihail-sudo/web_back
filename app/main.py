@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Depends, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from app.database import engine, Base
-from app.routers import users, chats
+from app.routers import users, chats, messages
 from .models import *
 from .utils.access_token import get_current_user
 
@@ -17,6 +17,7 @@ app.add_middleware(
 
 app.include_router(users.router)
 app.include_router(chats.router)
+app.include_router(messages.router)
 
 
 @app.on_event("startup")

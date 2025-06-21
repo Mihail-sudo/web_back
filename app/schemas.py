@@ -46,3 +46,8 @@ class Chat(ChatBase):
 class Token(BaseModel):
     access_token: str
     type_token: str
+
+
+class SendMessage(BaseModel):
+    chat_id: int
+    text: str
