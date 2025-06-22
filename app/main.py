@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Depends, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from app.database import engine, Base
-from app.routers import users, chats, messages
+from app.routers import users, chats, messages, ai
 from .models import *
 from .utils.access_token import get_current_user
 
@@ -9,7 +9,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # адрес фронтенда
+    allow_origins=["http://localhost:3000"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -18,6 +18,7 @@ app.add_middleware(
 app.include_router(users.router)
 app.include_router(chats.router)
 app.include_router(messages.router)
+app.include_router(ai.router)
 
 
 @app.on_event("startup")

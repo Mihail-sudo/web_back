@@ -6,7 +6,6 @@ from ..utils.access_token import get_current_user
 
 router = APIRouter(tags=["WebSocket"])
 
-# Простой список активных соединений
 active_connections = {}
 
 @router.websocket("/ws/{chat_id}")
@@ -18,13 +17,11 @@ async def websocket_chat(
 ):
     await websocket.accept()
 
-    # Проверяем, есть ли такой чат и состоит ли пользователь в нём
     chat = db.query(Chat).filter(Chat.id == chat_id).first()
     if not chat or db.query(User).get(current_user["id"]) not in chat.participants:
         await websocket.close(code=403)
         return
 
-    # Добавляем соединение в список
     if chat_id not in active_connections:
         active_connections[chat_id] = []
 
@@ -32,9 +29,8 @@ async def websocket_chat(
 
     try:
         while True:
-            data = await websocket.receive_text()  # можно игнорировать, если не нужен инпут
+            data = await websocket.receive_text()
     except WebSocketDisconnect:
-        # Убираем из списка при отключении
         active_connections[chat_id].remove(websocket)
 
 async def notify_clients(chat_id: int, message_data: dict):
