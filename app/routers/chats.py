@@ -47,7 +47,7 @@ def add_user_to_chat(
         user_names = user_names.split(';')
         new_faces = []
         for user_name in user_names:
-            new_user = db.query(models.User).filter(models.User.username == user_name).first()
+            new_user = db.query(models.User).filter(models.User.email == user_name).first()
             if new_user:
                 if new_user not in db_chat.participants:
                     new_faces.append(new_user.username)
